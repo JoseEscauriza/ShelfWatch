@@ -62,7 +62,9 @@ class Menu:
                     pass
 
                 case '3':
-                    pass
+                    data = service.dq_display_completed_books()
+                    table = [tab for tab in data]
+                    print(tabulate(table, headers=['Title', 'Username', 'Status'], tablefmt='fancy_grid'))
 
                 case '4':
                     pass
