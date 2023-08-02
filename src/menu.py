@@ -59,7 +59,10 @@ class Menu:
                     print(tabulate(table, headers=[
                           'Title', 'Username', 'Status'], tablefmt='fancy_grid'))
                 case '2':
-                    pass
+                    data = service.dq_display_reading_books()
+                    table = [tab for tab in data]
+                    print(tabulate(table, headers=[
+                          'Title', 'Username', 'Status'], tablefmt='fancy_grid'))
 
                 case '3':
                     pass
@@ -90,14 +93,36 @@ class Menu:
 
     @staticmethod
     def display_dm_menu():
-        print("""
-            1. Insert data
-            2. Update data
-            3. Delete data
-            4. Return to previous menu
-            5. Return to main menu
-            6. Exit program
-            """)
+        while True:
+            print("""
+                1. Insert data
+                2. Update data
+                3. Delete data
+                4. Return to main menu
+                5. Exit program
+                """)
+
+            option = input("Please pick an option: ")
+
+            match option:
+                case '1':
+                    print("""
+                        1. New member
+                        2. New Author
+                        3. New Book
+                        """)
+                    option2 = input("Please pick what you'd like to insert: ")
+                    match option2:
+                        case '1':
+                            table = 'member'
+
+                            data = input(
+                                "Please insert a username to store in the database: ")
+
+                            returning_id = service.dm_insert_data(table, data)
+                            print(returning_id)
+                case '5':
+                    sys.exit()
 
     @staticmethod
     def insert_data_menu():
