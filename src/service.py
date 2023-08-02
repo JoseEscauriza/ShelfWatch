@@ -1,9 +1,10 @@
+from psycopg import Connection
 from src.database import Database
 
 
 class Service:
     def __init__(self):
-        self.db = Database()
+        self.db: Connection = Database()  # noqa
 
     def dq_display_pending_books(self):
 
@@ -32,5 +33,18 @@ class Service:
 
         with self.db.cursor() as cursor:
             cursor.execute(query)
+            result = cursor.fetchall()
+            return result
+
+    def dq_display_book_by_author(self, author_name: str):
+        query = """
+            SELECT b.title, a.author_first_name || ' ' || a.author_last_name AS author 
+            FROM book AS b
+            JOIN author AS a ON b.author_id = a.id
+            WHERE a.author_first_name ILIKE %s or a.author_last_name ILIKE %s;
+        """
+
+        with self.db.cursor() as cursor:
+            cursor.execute(query, (f"%{author_name}%", f"%{author_name}%"))
             result = cursor.fetchall()
             return result
