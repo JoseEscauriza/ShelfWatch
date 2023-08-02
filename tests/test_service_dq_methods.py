@@ -44,3 +44,18 @@ class TestServiceDq(unittest.TestCase):
         service = Service()
         result = service.dq_display_book_by_author("Ronald")
         self.assertEqual(result, mock_result)
+
+    @patch('src.service.Database')
+    def test_dq_display_books_by_title_success(self, mock_database):
+        mock_result = [
+            ("Norse Mythology", "test description", "test genre", "test author"),
+            ("Norse Mythology volume 2", "test description", "test genre", "test author"),
+            ("Valhalla test norse", "test description", "test genre", "test author"),
+        ]
+
+        mock_cursor = Mock()
+        mock_cursor.fetchall.return_value = mock_result
+        mock_database.return_value.cursor.return_value.__enter__.return_value = mock_cursor
+        service = Service()
+        result = service.dq_display_book_by_author("norse")
+        self.assertEqual(result, mock_result)
