@@ -1,6 +1,6 @@
 import sys
 from src.service import Service
-from tabulate import tabulate
+from src.util import display_table
 
 service = Service()
 
@@ -55,29 +55,23 @@ class Menu:
             match option:
                 case '1':
                     data = service.dq_display_pending_books()
-                    table = [tab for tab in data]
-                    print(tabulate(table, headers=[
-                          'Title', 'Username', 'Status'], tablefmt='fancy_grid'))
+                    display_table(['Title', 'Username', 'Status'], data)
                 case '2':
                     pass
 
                 case '3':
                     data = service.dq_display_completed_books()
-                    table = [tab for tab in data]
-                    print(tabulate(table, headers=['Title', 'Username', 'Status'], tablefmt='fancy_grid'))
+                    display_table(['Title', 'Username', 'Status'], data)
 
                 case '4':
                     author = input("Insert author name: ")
                     data = service.dq_display_book_by_author(author)
-                    table = [tab for tab in data]
-                    print(tabulate(table, headers=['Title', 'Author'], tablefmt='fancy_grid'))
+                    display_table(['Title', 'Author'], data)
 
                 case '5':
                     title = input("Please insert book title: ")
                     data = service.dq_display_books_by_title(title)
-                    table = [tab for tab in data]
-                    print(tabulate(table, headers=['Title', 'Description', 'Genre', 'Author'], tablefmt='fancy_grid'))
-
+                    display_table(['Title', 'Description', 'Genre', 'Author'], data)
                 case '6':
                     pass
 
