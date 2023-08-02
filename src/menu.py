@@ -67,7 +67,10 @@ class Menu:
                     print(tabulate(table, headers=['Title', 'Username', 'Status'], tablefmt='fancy_grid'))
 
                 case '4':
-                    pass
+                    author = input("Insert author name: ")
+                    data = service.dq_display_book_by_author(author)
+                    table = [tab for tab in data]
+                    print(tabulate(table, headers=['Title', 'Author'], tablefmt='fancy_grid'))
 
                 case '5':
                     pass
