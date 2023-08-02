@@ -48,3 +48,16 @@ class Service:
             cursor.execute(query, (f"%{author_name}%", f"%{author_name}%"))
             result = cursor.fetchall()
             return result
+
+    def dq_display_books_by_title(self, title: str):
+        query = """
+                    SELECT b.title, b.description, b.genre, a.author_first_name || ' ' || a.author_last_name as author 
+                    FROM book AS b
+                    JOIN author AS a ON b.author_id = a.id
+                    WHERE b.title ILIKE %s
+                """
+
+        with self.db.cursor() as cursor:
+            cursor.execute(query, (f"%{title}%",))
+            result = cursor.fetchall()
+            return result
