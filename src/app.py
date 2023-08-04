@@ -1,4 +1,3 @@
-from src.service import Service
 from src.menu import Menu
 
 

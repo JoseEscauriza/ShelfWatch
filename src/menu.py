@@ -32,7 +32,7 @@ class Menu:
                     sys.exit()
                 case _:
                     print(
-                        "Option not recognized, please pick a valid option (1-3")
+                        "Option not recognized, please pick a valid option (1-3)")
 
     @staticmethod
     def display_dq_menu():
@@ -56,13 +56,11 @@ class Menu:
                 case '1':
                     data = service.dq_display_pending_books()
                     table = [tab for tab in data]
-                    print(tabulate(table, headers=[
-                          'Title', 'Username', 'Status'], tablefmt='fancy_grid'))
+                    print(tabulate(table, headers=['Title', 'Username', 'Status'], tablefmt='fancy_grid'))
                 case '2':
                     data = service.dq_display_reading_books()
                     table = [tab for tab in data]
-                    print(tabulate(table, headers=[
-                          'Title', 'Username', 'Status'], tablefmt='fancy_grid'))
+                    print(tabulate(table, headers=['Title', 'Username', 'Status'], tablefmt='fancy_grid'))
 
                 case '3':
                     data = service.dq_display_completed_books()
@@ -108,30 +106,47 @@ class Menu:
 
             match option:
                 case '1':
-                    print("""
-                        1. New member
-                        2. New Author
-                        3. New Book
-                        """)
+                    Menu.insert_data_menu()
                     option2 = input("Please pick what you'd like to insert: ")
                     match option2:
                         case '1':
                             table = 'member'
-
-                            data = input(
-                                "Please insert a username to store in the database: ")
-
+                            data = service.dm_prompt_member_data()
                             returning_id = service.dm_insert_data(table, data)
                             print(returning_id)
+
+                        case '2':
+                            table = 'author'
+                            data = service.dm_prompt_author_data()
+                            returning_id = service.dm_insert_data(table, data)
+                            print(returning_id)
+
+                        case '3':
+                            table = 'book'
+                            data = service.dm_prompt_book_data()
+                            returning_id = service.dm_insert_data(table, data)
+                            print(returning_id)
+
+                        case '4':
+                            pass
+                        case '5':
+                            Menu.display_menu()
+                        case '6':
+                            sys.exit()
+                        case _:
+                            print("Invalid option, please try again")
+                case '4':
+                    break
                 case '5':
                     sys.exit()
-
+                case _:
+                    print("Option not recognized, please try again")
     @staticmethod
     def insert_data_menu():
         print("""
-            1. Insert User
-            2. Insert Book
-            3. Insert Author
+            1. Insert Member
+            2. Insert Author
+            3. Insert Book
             4. Return to previous menu
             5. Return to main menu
             6. Exit program
@@ -140,19 +155,18 @@ class Menu:
     @staticmethod
     def update_data_menu():
         print("""
-            1. Update User
+            1. Update Member
             2. Update Book
             3. Update Author
-            4. Update Status
-            5. Return to previous menu
-            6. Return to main menu
-            7. Exit program
+            4. Return to previous menu
+            5. Return to main menu
+            6. Exit program
             """)
 
     @staticmethod
     def delete_data_menu():
         print("""
-            1. Delete User
+            1. Delete Member
             2. Delete Book
             3. Delete Author
             4. Return to previous menu
